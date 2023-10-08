@@ -1,0 +1,110 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 300,
+    "height": 150,
+    "config": {
+      "view": {
+        "stroke": "transparent"
+      }
+    },
+    "data": {
+      "url": "https://raw.githubusercontent.com/RyanKoh03/FIT3179hw10/main/global_emissions_cleaned_time.csv"
+    },
+    "params": [
+      {
+        "name": "Year_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            2015,
+            2016,
+            2017,
+            2018,
+            2019,
+            2020,
+            2021
+          ],
+          "labels": [
+            "Show All",
+            "2015",
+            "2016",
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021"
+          ],
+          "name": "Year: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "Year_selection == null || datum.Year == Year_selection"
+      },
+      {
+        "joinaggregate": [
+          {
+            "op": "mean",
+            "field": "Coal",
+            "as": "average_score"
+          }
+        ],
+        "groupby": [
+          "Country"
+        ]
+      }
+    ],
+    "encoding": {
+      "y": {
+        "field": "Country",
+        "type": "nominal",
+        "axis": {
+          "grid": false
+        }
+      },
+      "x": {
+        "aggregate": "average",
+        "field": "average_score",
+        "type": "quantitative",
+        "title": "Average Score",
+        "axis": {
+          "grid": false
+        }
+      },
+      "tooltip": [
+          {
+              "field": "Country",
+              "type": "nominal",
+              "title": "Region"
+          },
+          {
+              "field": "Coal",
+              "type": "quantitative",
+              "format": ".2f",
+              "title": "Average Score"
+          }   
+              ]
+    },
+    "layer": [
+      {
+        "mark": "bar"
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "middle",
+          "dx": 3
+        },
+        "encoding": {
+          "text": {
+            "field": "average_score",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        }
+      }
+    ]
+  }
