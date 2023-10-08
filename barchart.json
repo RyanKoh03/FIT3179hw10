@@ -68,7 +68,7 @@
         "aggregate": "average",
         "field": "average_score",
         "type": "quantitative",
-        "title": "Average Score",
+        "title": "Average Coal Usage",
         "axis": {
           "grid": false
         }
@@ -83,7 +83,7 @@
               "field": "Coal",
               "type": "quantitative",
               "format": ".2f",
-              "title": "Average Score"
+              "title": "Average Coal Usage"
           }   
               ]
     },
